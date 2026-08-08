@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  /* Locked design tokens (01-UI-SPEC.md) — colors */
+  --color-dominant: #0a0a0a;
+  --color-secondary: #171717;
+  --color-foreground: #f5f5f5;
+  --color-muted-foreground: #a3a3a3;
+  --color-accent: #e8b34a;
+  --color-destructive: #dc2626;
+
+  /* Locked design tokens — spacing scale (multiples of 4) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  --background: var(--color-dominant);
+  --foreground: var(--color-foreground);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-dominant: var(--color-dominant);
+  --color-secondary: var(--color-secondary);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-accent: var(--color-accent);
+  --color-destructive: var(--color-destructive);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Typography roles — Label 14/400/1.5, Body 16/400/1.5, Heading 20/600/1.2, Display 28/600/1.2 */
+  --text-label: 14px;
+  --text-label--line-height: 1.5;
+  --text-label--font-weight: 400;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-body--font-weight: 400;
+  --text-heading: 20px;
+  --text-heading--line-height: 1.2;
+  --text-heading--font-weight: 600;
+  --text-display: 28px;
+  --text-display--line-height: 1.2;
+  --text-display--font-weight: 600;
+
+  /* Spacing scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
