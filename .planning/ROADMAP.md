@@ -13,7 +13,7 @@ My Audiobooks ships as three vertical slices, each one a fully usable increment 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Install & Offline App Shell** - Installable, standalone, offline-launching PWA shell on iPhone
+- [x] **Phase 1: Install & Offline App Shell** - Installable, standalone, offline-launching PWA shell on iPhone (completed 2026-08-08)
 - [ ] **Phase 2: Import & Library** - Import audiobook files and manage a persistent on-device library
 - [ ] **Phase 3: Playback & Resume** - Full playback controls with reliable auto-resume — the app's core value
 
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Launching the app from the home-screen icon opens it in standalone mode, with no Safari address bar or browser chrome visible.
   3. With the device in airplane mode, opening the installed app still loads the app shell successfully instead of showing a browser offline error.
 
-**Plans:** 2/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 **Wave 1**
@@ -85,6 +85,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Install & Offline App Shell | 2/2 | In Progress|  |
+| 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
 | 2. Import & Library | 0/TBD | Not started | - |
 | 3. Playback & Resume | 0/TBD | Not started | - |

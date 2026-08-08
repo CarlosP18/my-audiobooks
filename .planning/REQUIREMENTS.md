@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Install
 
-- [ ] **INST-01**: User can install the app to the iPhone home screen via Safari "Add to Home Screen"
-- [ ] **INST-02**: App launches in standalone mode (no browser chrome) when opened from the home screen
-- [ ] **INST-03**: App works fully offline once installed — no network dependency for core playback
+- [x] **INST-01**: User can install the app to the iPhone home screen via Safari "Add to Home Screen"
+- [x] **INST-02**: App launches in standalone mode (no browser chrome) when opened from the home screen
+- [x] **INST-03**: App works fully offline once installed — no network dependency for core playback
 
 ### Import
 
@@ -83,9 +83,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INST-01 | Phase 1 | Pending |
-| INST-02 | Phase 1 | Pending |
-| INST-03 | Phase 1 | Pending |
+| INST-01 | Phase 1 | Complete |
+| INST-02 | Phase 1 | Complete |
+| INST-03 | Phase 1 | Complete |
 | IMPT-01 | Phase 2 | Pending |
 | IMPT-02 | Phase 2 | Pending |
 | LIBR-01 | Phase 2 | Pending |
@@ -101,6 +101,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PLAY-06 | Phase 3 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 16 total
 - Mapped to phases: 16 (Phase 1: 3, Phase 2: 7, Phase 3: 6)
 - Unmapped: 0 ✓
