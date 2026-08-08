@@ -27,7 +27,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. From Safari, the user can use "Add to Home Screen" and a correctly branded icon (not a generic or broken icon) appears on the iPhone home screen.
   2. Launching the app from the home-screen icon opens it in standalone mode, with no Safari address bar or browser chrome visible.
   3. With the device in airplane mode, opening the installed app still loads the app shell successfully instead of showing a browser offline error.
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold the repo and render the branded, installable "My Library" shell with every iOS manifest/icon/meta prerequisite (INST-01, INST-02)
+- [ ] 01-02-PLAN.md — Add the Serwist offline service worker, deploy to the HTTPS origin, and verify install/standalone/airplane-mode on a real iPhone (INST-01, INST-02, INST-03)
+
 **UI hint**: yes
 
 ### Phase 2: Import & Library
@@ -65,6 +70,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Install & Offline App Shell | 0/TBD | Not started | - |
+| 1. Install & Offline App Shell | 0/2 | Not started | - |
 | 2. Import & Library | 0/TBD | Not started | - |
 | 3. Playback & Resume | 0/TBD | Not started | - |
