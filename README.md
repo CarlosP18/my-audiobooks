@@ -34,3 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Deployment
+
+Production origin: **https://my-audiobooks.vercel.app**
+
+IndexedDB and Cache Storage are origin-scoped, so Phase 2's library becomes bound to this exact origin — changing it later would orphan the user's imported books with no migration path. Right now there is no data, so changing the origin costs nothing; that stops being true the moment Phase 2 imports a file. Attaching a custom domain now (while it's still free) would make the *host* swappable later without changing the *origin* the data is bound to.
