@@ -17,8 +17,8 @@ affects: [02-import-library, 03-playback-resume]
 # Actuals (#2632)
 actuals:
   tokens: 3400
-  tasks: 1
-  commits: 1
+  tasks: 2
+  commits: 3
 
 # Tech tracking
 tech-stack:
@@ -49,11 +49,9 @@ key-decisions:
 patterns-established:
   - "Cache Storage vs IndexedDB boundary holds by construction: app/sw.ts's runtimeCaching is exactly `defaultCache` (no registerRoute/CacheFirst additions) and a comment-filtered negative grep for media extensions/createObjectURL/etc. passes — Phase 2/3 inherit this scope discipline rather than relitigating it."
 
-requirements-completed: []
-# INST-01/02/03 are NOT marked complete here. The plan's own ROADMAP success
-# criteria require physical-iPhone verification (Task 2), which is blocked —
-# see "Next Phase Readiness" below. Task 1 (this dispatch's only completed
-# task) is a prerequisite for INST-03, not a standalone completion of it.
+requirements-completed: [INST-01, INST-02, INST-03]
+# All three confirmed on a physical iPhone by the user: branded install,
+# standalone full-screen launch, and airplane-mode offline launch all pass.
 
 coverage:
   - id: D1
@@ -98,20 +96,20 @@ coverage:
         ref: "Deployed via the Vercel MCP connector (mcp__Vercel__deploy_to_vercel) after the CLI's device-code auth failed outbound in this environment (see Issues Encountered) — the user authenticated Claude's Vercel connector via OAuth instead, an equally legitimate but different auth path than <precondition> anticipated. Production build succeeded (dpl_B8mizUrAkCAcGWX2kBK7pPV5npx7, READY). Verified via mcp__Vercel__web_fetch_vercel_url (this sandbox's own outbound proxy blocks direct curl to *.vercel.app, confirmed via $HTTPS_PROXY/__agentproxy/status — unrelated to Vercel itself): GET / 200 text/html with all three copy strings and all iOS meta tags; manifest.webmanifest 200 with correct name/display/colors/icons; apple-icon and pwa-icon routes 200 image/png; /sw.js 200 application/javascript with a substantial non-empty precacheEntries list (static app-shell assets only — JS chunks, CSS, fonts, SVGs; no media/user-data route); zero http:// references in served HTML. Also discovered and fixed a real bug: the Vercel team's default SSO/Vercel-Authentication deployment protection (ssoProtection.enabled=true) was blocking ALL anonymous access including from a real iPhone's Safari — disabled via mcp__Vercel__update_project_deployment_protection, since this app has no auth surface of its own by design (see Issues Encountered)."
         status: pass
       - kind: manual
-        ref: "Three ROADMAP success-criteria checks (branded home-screen icon, standalone full-screen launch, airplane-mode offline launch) — require a physical iPhone, not yet performed."
-        status: pending
+        ref: "Three ROADMAP success-criteria checks (branded home-screen icon, standalone full-screen launch, airplane-mode offline launch) — performed by the user on a physical iPhone against https://my-audiobooks.vercel.app. User confirmation: \"Fase 1 funcionando correctamente\" (Phase 1 working correctly)."
+        status: pass
     human_judgment: true
-    rationale: "Automated portion of Task 2 is now complete and passing against the live production URL. Only the three physical-device checks remain, and those are irreducibly human — no agent can perform them."
+    rationale: "Automated portion of Task 2 passed against the live production URL, and the user has now confirmed all three physical-device checks pass. Phase 1's riskiest platform assumption is proven."
 
 # Metrics
-duration: ~35min (Task 1) + orchestrator-driven deploy
+duration: ~35min (Task 1) + orchestrator-driven deploy + user device verification
 completed: 2026-08-08
-status: blocked
+status: complete
 ---
 
 # Phase 1 Plan 2: Offline Service Worker Summary
 
-**Serwist service worker precaching the app shell (Next 16 forced to webpack builds, since @serwist/next's stable integration predates Turbopack support) — Task 1 complete and committed; Task 2 deployed to production (https://my-audiobooks.vercel.app) and automated verification passed — only the 3 physical-iPhone checks remain**
+**Serwist service worker precaching the app shell (Next 16 forced to webpack builds, since @serwist/next's stable integration predates Turbopack support) — deployed to production (https://my-audiobooks.vercel.app) and all three ROADMAP success criteria confirmed on a physical iPhone**
 
 ## Performance
 
@@ -135,9 +133,9 @@ status: blocked
 ## Task Commits
 
 1. **Task 1: Add the Serwist service worker so the shell loads with no network** — `a17c602` (feat)
-2. **Task 2: Deploy to the HTTPS origin and verify install, standalone and airplane mode on a real iPhone** — automated portion complete (deploy + gate verification + README.md), orchestrator-driven via the Vercel MCP connector rather than the CLI. Commit pending (README.md update). Human-check items (branded icon, standalone launch, airplane-mode launch) still pending — no commit closes the plan until those are confirmed.
+2. **Task 2: Deploy to the HTTPS origin and verify install, standalone and airplane mode on a real iPhone** — `eb722c1` (feat), orchestrator-driven via the Vercel MCP connector rather than the CLI. All three human-check items confirmed by the user on a physical iPhone.
 
-**Plan metadata:** STATE.md/ROADMAP.md remain untouched by this SUMMARY update per the orchestrator's ownership of those files; the plan is NOT complete until the three human-check items are confirmed.
+**Plan status: COMPLETE.** Both tasks done, all must_haves verified, all three requirements (INST-01, INST-02, INST-03) confirmed. STATE.md/ROADMAP.md are updated by the orchestrator after this SUMMARY.
 
 ## Files Created/Modified
 
@@ -210,21 +208,15 @@ status: blocked
 
 ## User Setup Required
 
-**Resolved — no longer blocking.** Task 2's Vercel access is live via the connector; the app is deployed and passing every automated check. What remains is exactly the human-only portion the plan always anticipated:
-
-1. Have a physical iPhone available with Safari, reachable network, and the ability to toggle airplane mode.
-2. Open **https://my-audiobooks.vercel.app** in Safari and perform the three checks below (verbatim from the plan):
-   - **Check 1 — INST-01, branded install.** Share → Add to Home Screen. Confirm the icon shows the book-and-audio-wave glyph on a solid graphite tile (not a screenshot, not a black square, not a generic globe), labelled "My Audiobooks".
-   - **Check 2 — INST-02, standalone launch.** Fully close Safari, launch from the home-screen icon. Confirm full-screen, no address bar, no browser chrome; "My Library" / "No audiobooks yet" render below the notch.
-   - **Check 3 — INST-03, offline launch.** With the app installed, enable airplane mode (Wi-Fi off too), fully close the app, relaunch from the home-screen icon. Confirm "My Library" loads normally — not Safari's offline error, not blank — visually identical to the online launch, no offline banner. Then disable airplane mode and relaunch once more to confirm the online launch is equally unremarkable.
+None remaining. The user completed the physical-iPhone verification against **https://my-audiobooks.vercel.app** and confirmed: "Fase 1 funcionando correctamente."
 
 ## Next Phase Readiness
 
-- **Not ready for Phase 2 yet — one step away.** Phase 2 (Import & Library) can safely build on the shell only after INST-03 is proven on a real device, per SKELETON.md's "riskiest platform assumption" framing. Every automated precondition for that proof is now in place; only the human device checks remain.
+- **Ready for Phase 2.** Phase 1's riskiest platform assumption — that iOS will install this app with a correct icon and launch it standalone and offline — is proven on real hardware, not just in local/automated checks.
 - Task 1's output is solid and locally verified: the service worker precaches the real build output, the Cache-Storage/IndexedDB boundary holds by construction, and the installability gate (localhost) passes 27/27.
-- Task 2's automated portion is solid and verified against the live production origin: HTTPS, correct manifest/meta tags/icons, non-empty service-worker precache manifest, zero mixed content, deployment protection correctly open to anonymous visitors, `README.md` records the origin-binding constraint.
-- **Remaining blocker for phase completion:** the three physical-iPhone checks (see User Setup Required above) — irreducibly human, cannot be automated by any agent.
-- No architectural blockers. No data model exists yet to worry about origin migration cost (SKELETON.md Architectural Constraint 1) — the origin is still free to choose, exactly as the plan's `<reversibility>` note for Task 2 describes.
+- Task 2's automated portion is verified against the live production origin: HTTPS, correct manifest/meta tags/icons, non-empty service-worker precache manifest, zero mixed content, deployment protection correctly open to anonymous visitors, `README.md` records the origin-binding constraint.
+- All three ROADMAP success criteria confirmed on a physical iPhone by the user.
+- No architectural blockers. No data model exists yet, so the origin-migration cost SKELETON.md Architectural Constraint 1 describes was still zero at the moment this origin was chosen and recorded.
 
 ## Self-Check: PASSED
 
@@ -235,7 +227,8 @@ status: blocked
 - Commit `a17c602` — FOUND in `git log`
 - Production deployment `dpl_B8mizUrAkCAcGWX2kBK7pPV5npx7` — READY, verified live at https://my-audiobooks.vercel.app
 - `README.md` Deployment section — FOUND
+- Three physical-iPhone checks — CONFIRMED by user
 
 ---
 *Phase: 01-install-offline-app-shell*
-*Updated: 2026-08-08 (Task 1 complete; Task 2 automated portion complete and verified against production — 3 physical-iPhone checks remain)*
+*Completed: 2026-08-08*
