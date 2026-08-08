@@ -58,7 +58,21 @@ Plans:
   4. Each book in the library screen shows a progress indicator (percent complete or time remaining).
   5. The user can delete a book from the library screen, freeing its storage, and it disappears from the list immediately.
 
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Import one file end-to-end into a persistent library: Dexie schema, title cleanup, duration read, and a data-driven library screen (IMPT-01, IMPT-02, LIBR-01, LIBR-02, LIBR-03, LIBR-04)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-02-PLAN.md — Real library row and swipe-to-delete: hand-vendored Radix alert-dialog and progress, truncating titles, and a delete that frees storage (LIBR-01, LIBR-03, LIBR-04, LIBR-05)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 02-03-PLAN.md — Honest import reporting: in-flight placeholder rows and the four-variant inline failure banner (IMPT-01, IMPT-02, LIBR-01)
+
 **UI hint**: yes
 
 ### Phase 3: Playback & Resume
@@ -86,5 +100,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
-| 2. Import & Library | 0/TBD | Not started | - |
+| 2. Import & Library | 0/3 | Planned | - |
 | 3. Playback & Resume | 0/TBD | Not started | - |
