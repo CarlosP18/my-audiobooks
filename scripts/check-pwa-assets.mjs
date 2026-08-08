@@ -261,6 +261,40 @@ async function main() {
     }
   }
 
+  // --- service worker (plan 01-02): the app shell must survive airplane
+  // mode, so /sw.js must exist, be served as JavaScript, and carry a
+  // non-empty precache manifest. An empty manifest is a passing-looking
+  // build that white-screens offline. ---
+  const swUrl = resolveUrl("/sw.js", baseUrl);
+  try {
+    const swResponse = await fetchWithTimeout(swUrl);
+    const swContentType = swResponse.headers.get("content-type") ?? "";
+    const swFetchOk = record(
+      "GET /sw.js returns 200 with a JavaScript content type",
+      swResponse.ok && /javascript/i.test(swContentType),
+      `status=${swResponse.status} content-type=${swContentType}`,
+    );
+    if (swFetchOk) {
+      const swBody = await swResponse.text();
+      record(
+        "sw.js body is non-trivially sized (>1000 bytes)",
+        swBody.length > 1000,
+        `length=${swBody.length}`,
+      );
+      record(
+        "sw.js contains a non-empty precache entry list",
+        /precacheEntries:\[\{/.test(swBody) ||
+          /precacheEntries["']?\s*:\s*\[\s*\{/.test(swBody),
+      );
+    }
+  } catch (err) {
+    record(
+      "GET /sw.js returns 200 with a JavaScript content type",
+      false,
+      String(err),
+    );
+  }
+
   printSummaryAndExit();
 }
 
