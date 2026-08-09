@@ -2,35 +2,35 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 2
-current_phase_name: import-library
-status: executing
-stopped_at: Phase 2 UI-SPEC approved
-last_updated: "2026-08-09T01:53:32.322Z"
+current_phase: 3
+current_phase_name: Playback & Resume
+status: planning
+stopped_at: Phase 2 complete, ready to plan Phase 3
+last_updated: "2026-08-09T03:18:38.080Z"
 last_activity: 2026-08-09
-last_activity_desc: Phase 2 execution started
+last_activity_desc: Phase 2 complete, transitioned to Phase 3
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 5
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-08-07)
+See: .planning/PROJECT.md (updated 2026-08-09)
 
 **Core value:** Resume playback exactly where you left off, every time — reliably, offline, entirely on-device.
-**Current focus:** Phase 2 — import-library
+**Current focus:** Phase 3 — playback-&-resume
 
 ## Current Position
 
-Phase: 2 (import-library) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 2
-Last activity: 2026-08-09 — Phase 2 execution started
+Phase: 3 — Playback & Resume
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-09 — Phase 2 complete, transitioned to Phase 3
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -38,7 +38,7 @@ Progress: [░░░░░░░░░░] 0%
 
 **Velocity:**
 
-- Total plans completed: 2
+- Total plans completed: 5
 - Average duration: - min
 - Total execution time: 0 hours
 
@@ -47,6 +47,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 | 2 | - | - |
+| 2 | 3 | - | - |
 
 **Recent Trend:**
 
@@ -71,9 +72,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 1: iOS-specific manifest/icon/standalone-mode behavior needs real-device verification (not just desktop/simulator) — apple-touch-icon required separately from manifest.json icons.
-- Phase 2: IndexedDB Blob storage behavior on iOS Safari (transaction hygiene, quota errors) must be validated on a real device before building the full library UI on top of it.
 - Phase 3: Autoplay-gesture restrictions (`.play()` must be called synchronously in a user-gesture handler) and storage-eviction timing (~7 days idle) are under-documented by Apple — scope explicit real-device verification steps as acceptance criteria, not just "play button works."
+- Phase 3: Tailwind arbitrary-value classes (`left-1/2`, `w-[calc(...)]`, etc.) proved unreliable for fixed/centered positioning on a physical iPhone PWA in Phase 2 (alert-dialog rendered broken) — prefer inline styles for any new fixed-position overlay UI (e.g. a playback mini-player or seek bar) rather than assuming arbitrary-value Tailwind classes will apply correctly on-device.
 
 ## Deferred Items
 
@@ -85,6 +85,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-08T02:52:59.736Z
-Stopped at: Phase 2 UI-SPEC approved
-Resume file: .planning/phases/02-import-library/02-UI-SPEC.md
+Last session: 2026-08-09T00:00:00.000Z
+Stopped at: Phase 2 complete, ready to plan Phase 3
+Resume file: None

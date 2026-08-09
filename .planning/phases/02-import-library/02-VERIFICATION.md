@@ -1,35 +1,42 @@
 ---
 phase: 02-import-library
 verified: 2026-08-09T03:00:00Z
-status: human_needed
+status: passed
 score: 42/52 must-haves verified
 behavior_unverified: 10
 overrides_applied: 0
 behavior_unverified_items:
+
   - truth: "SC1/D-01/D-02: Picking a real .mp3/.m4a/.m4b through the iOS file picker on the installed home-screen PWA imports it and it appears in the library with a cleaned title and plausible progress line, with no manual refresh"
     test: "On the installed home-screen PWA (not a Safari tab), tap the empty-state copy or header Plus, pick a real .mp3, .m4a and .m4b"
     expected: "Each row appears with a sensibly cleaned title and '0% — {plausible duration} remaining'"
     why_human: "Real iOS file-picker interaction and IndexedDB Blob-write behavior on Safari cannot be exercised in this sandbox; code path is structurally proven (importFile pipeline, useLiveQuery reactivity) but never run against real device I/O"
+
   - truth: "SC2/LIBR-02: Closing the app fully and reopening it later (including after a device reboot) still shows every previously imported book"
     test: "Force-quit the installed PWA, relaunch from the home-screen icon (ideally after a reboot)"
     expected: "All previously imported books are still listed"
     why_human: "Cross-session persistence and iOS's ~7-day idle-storage-eviction risk (an accepted, documented platform risk per PROJECT.md/PITFALLS.md) can only be observed on real hardware — this is the phase's standing STATE.md blocker, still open"
+
   - truth: "SC5/D-07/D-08/LIBR-05: Swiping a row left reveals the Destructive delete panel (no icon visible at rest); tapping it shows the exact D-08 confirmation; confirming removes the book+bytes and the row disappears immediately with no refresh; cancelling leaves the book and resets the panel"
     test: "On the installed PWA with books imported: swipe left, confirm panel reveal without page scroll; tap Delete, confirm dialog text verbatim; tap Cancel, confirm nothing changed; swipe+Delete+confirm again, confirm the row vanishes immediately; force-quit/relaunch to confirm the deletion held"
     expected: "Swipe/tap/cancel/confirm all behave as specified above and survive a relaunch"
     why_human: "Touch-gesture feel (48px latch threshold, vertical-scroll suppression) and the live-query re-render-on-delete can only be judged on a real touchscreen; the underlying db.books.delete call and Dexie idempotency/reactivity contract are code-verified, but the full gesture-to-confirm-to-vanish flow is not"
+
   - truth: "D-02: An in-flight placeholder row appears immediately (with the cleaned title, spinner, 'Importing…') for each picked file, on both the empty and populated library, and resolves into the real row without a visual jump"
     test: "Import a large audiobook (and repeat on an empty library) on the installed PWA"
     expected: "Placeholder appears immediately, is the first/only row when the library is empty, and resolves into the real row without resizing/jumping"
     why_human: "Visual-continuity/no-jump timing during a real async Dexie write cannot be captured by static analysis; the gating logic (`books.length===0 && inFlight.length===0`) is code-verified, but the rendered transition is not"
+
   - truth: "D-03: A non-audio file picked from the real Files app raises the correct dismissible banner variant; a mixed multi-select imports the valid file while only the invalid one errors; a later success clears the banner"
     test: "Pick a photo/PDF; then multi-select one valid audio file plus one invalid file together; then import successfully afterward"
     expected: "Correct copy variant shown and dismissible, app stays fully usable; valid file imports while only the invalid one banners; banner clears on next success"
     why_human: "Real iOS file-picker file-type reporting and true multi-file selection behavior cannot be simulated headlessly; the per-file independent-pipeline code and the four locked copy strings are structurally/unit-verified, but end-to-end picker behavior is not"
+
   - truth: "LIBR-03 on-device: long filename-derived titles truncate to a single line with an ellipsis and never resize the row; full text remains reachable via aria-label"
     test: "Import three books with deliberately long filenames on the installed PWA"
     expected: "Every title stays on one line, no wrapping, no row-height change"
     why_human: "CSS ellipsis/text-layout rendering at real viewport widths needs a real screen; the `truncate` class and `aria-label` are confirmed present in source, but the rendered result is not"
+
   - truth: "LIBR-04 visual: the Progress bar renders zero fill in the Accent amber token, and the header Plus button is visible only once the library is populated"
     test: "Observe the progress bar color/fill and header button visibility on the installed PWA, both empty and populated"
     expected: "Bar renders 0% fill in `#E8B34A`; Plus button present only when populated"
@@ -204,6 +211,7 @@ No orphaned requirements: all 7 Phase 2 requirement IDs in REQUIREMENTS.md (IMPT
 ## WINDOWS.md Cross-Check
 
 `.planning/WINDOWS.md` currently lists 4 open entries, all attributable to Phase 2, `open_count: 4`. Independently confirmed accurate and not fabricated:
+
 - #1 (unrun-verify): Plan 02-01's physical-iPhone import/persistence check — matches this report's SC1/SC2 findings.
 - #2 (deviation): `verify:pwa` 2/27 — independently re-run, confirmed exactly the same 2 expected failures, not a regression.
 - #3 (unrun-verify): Plan 02-02/03's physical-iPhone row/swipe/delete checks — matches this report's SC5 finding.

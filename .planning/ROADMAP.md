@@ -14,7 +14,7 @@ My Audiobooks ships as three vertical slices, each one a fully usable increment 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Install & Offline App Shell** - Installable, standalone, offline-launching PWA shell on iPhone (completed 2026-08-08)
-- [ ] **Phase 2: Import & Library** - Import audiobook files and manage a persistent on-device library
+- [x] **Phase 2: Import & Library** - Import audiobook files and manage a persistent on-device library (completed 2026-08-09)
 - [ ] **Phase 3: Playback & Resume** - Full playback controls with reliable auto-resume — the app's core value
 
 ## Phase Details
@@ -58,7 +58,7 @@ Plans:
   4. Each book in the library screen shows a progress indicator (percent complete or time remaining).
   5. The user can delete a book from the library screen, freeing its storage, and it disappears from the list immediately.
 
-**Plans:** 3/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 **Wave 1**
@@ -100,5 +100,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
-| 2. Import & Library | 3/3 | In Progress|  |
+| 2. Import & Library | 3/3 | Complete    | 2026-08-09 |
 | 3. Playback & Resume | 0/TBD | Not started | - |

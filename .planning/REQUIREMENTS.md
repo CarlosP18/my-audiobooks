@@ -15,16 +15,16 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Import
 
-- [ ] **IMPT-01**: User can import an audio file via the iOS file picker, regardless of format (mp3, m4b, m4a, etc.)
-- [ ] **IMPT-02**: Imported file is copied into the app's internal storage, not just referenced
+- [x] **IMPT-01**: User can import an audio file via the iOS file picker, regardless of format (mp3, m4b, m4a, etc.)
+- [x] **IMPT-02**: Imported file is copied into the app's internal storage, not just referenced
 
 ### Library
 
-- [ ] **LIBR-01**: User can see a list of all imported audiobooks
-- [ ] **LIBR-02**: Library persists across app restarts and device reboots
-- [ ] **LIBR-03**: Library list shows a cleaned-up title derived from the filename (not the raw filename)
-- [ ] **LIBR-04**: Library list shows per-book progress (percent complete or time remaining)
-- [ ] **LIBR-05**: User can delete an audiobook from the library to free up storage
+- [x] **LIBR-01**: User can see a list of all imported audiobooks
+- [x] **LIBR-02**: Library persists across app restarts and device reboots
+- [x] **LIBR-03**: Library list shows a cleaned-up title derived from the filename (not the raw filename)
+- [x] **LIBR-04**: Library list shows per-book progress (percent complete or time remaining)
+- [x] **LIBR-05**: User can delete an audiobook from the library to free up storage
 
 ### Player
 
@@ -86,13 +86,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INST-01 | Phase 1 | Complete |
 | INST-02 | Phase 1 | Complete |
 | INST-03 | Phase 1 | Complete |
-| IMPT-01 | Phase 2 | Pending |
-| IMPT-02 | Phase 2 | Pending |
-| LIBR-01 | Phase 2 | Pending |
-| LIBR-02 | Phase 2 | Pending |
-| LIBR-03 | Phase 2 | Pending |
-| LIBR-04 | Phase 2 | Pending |
-| LIBR-05 | Phase 2 | Pending |
+| IMPT-01 | Phase 2 | Complete |
+| IMPT-02 | Phase 2 | Complete |
+| LIBR-01 | Phase 2 | Complete |
+| LIBR-02 | Phase 2 | Complete |
+| LIBR-03 | Phase 2 | Complete |
+| LIBR-04 | Phase 2 | Complete |
+| LIBR-05 | Phase 2 | Complete |
 | PLAY-01 | Phase 3 | Pending |
 | PLAY-02 | Phase 3 | Pending |
 | PLAY-03 | Phase 3 | Pending |

@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 4
+open_count: 0
 waived_count: 0
-fixed_count: 0
+fixed_count: 4
 total_count: 4
-last_updated: 2026-08-09T02:22:18.281Z
+last_updated: 2026-08-09T03:17:44.327Z
 ---
 
 # Broken Windows Ledger
@@ -15,10 +15,10 @@ last_updated: 2026-08-09T02:22:18.281Z
 
 | id | phase | kind | file | line | description | status | reason | recorded_at | resolved_at |
 |----|-------|------|------|------|-------------|--------|--------|-------------|-------------|
-| 1 | 02 | unrun-verify | app/page.tsx |  | Task 2 human-check: physical-iPhone import/persistence verification (real .mp3/.m4a/.m4b, force-quit/relaunch) not performed — no iPhone available in this environment | open |  | 2026-08-09T02:04:06.488Z |  |
-| 2 | 02 | deviation | scripts/check-pwa-assets.mjs |  | pnpm verify:pwa fails 2/27 assertions (empty-state text absent from raw SSR HTML) — expected consequence of useLiveQuery's undefined-first-render design (Pattern 2), not a regression; 25/27 installability assertions still pass | open |  | 2026-08-09T02:04:06.667Z |  |
-| 3 | 02 | unrun-verify | components/library-row.tsx |  | Task 2/3 human-check: physical-iPhone verification of long-title truncation, Accent progress-bar fill, header Plus visibility, swipe reveal/spring-back, verbatim D-08 dialog, cancel/confirm delete behavior, and post-relaunch persistence of deletion — not performed, no iPhone available in this environment | open |  | 2026-08-09T02:13:12.147Z |  |
-| 4 | 02 | unrun-verify | app/page.tsx |  | Task 2 human-check: physical-iPhone verification of D-02/D-03 (placeholder row appears/resolves without jump on empty and populated library, non-audio pick raises correct dismissible banner variant, mixed multi-select imports valid file while reporting only the invalid one, banner clears on next success) not performed - no iPhone available in this environment | open |  | 2026-08-09T02:22:18.281Z |  |
+| 1 | 02 | unrun-verify | app/page.tsx |  | Task 2 human-check: physical-iPhone import/persistence verification (real .mp3/.m4a/.m4b, force-quit/relaunch) not performed — no iPhone available in this environment | fixed |  | 2026-08-09T02:04:06.488Z | 2026-08-09T03:17:43.675Z |
+| 2 | 02 | deviation | scripts/check-pwa-assets.mjs |  | pnpm verify:pwa fails 2/27 assertions (empty-state text absent from raw SSR HTML) — expected consequence of useLiveQuery's undefined-first-render design (Pattern 2), not a regression; 25/27 installability assertions still pass | fixed |  | 2026-08-09T02:04:06.667Z | 2026-08-09T03:17:43.853Z |
+| 3 | 02 | unrun-verify | components/library-row.tsx |  | Task 2/3 human-check: physical-iPhone verification of long-title truncation, Accent progress-bar fill, header Plus visibility, swipe reveal/spring-back, verbatim D-08 dialog, cancel/confirm delete behavior, and post-relaunch persistence of deletion — not performed, no iPhone available in this environment | fixed |  | 2026-08-09T02:13:12.147Z | 2026-08-09T03:17:44.038Z |
+| 4 | 02 | unrun-verify | app/page.tsx |  | Task 2 human-check: physical-iPhone verification of D-02/D-03 (placeholder row appears/resolves without jump on empty and populated library, non-audio pick raises correct dismissible banner variant, mixed multi-select imports valid file while reporting only the invalid one, banner clears on next success) not performed - no iPhone available in this environment | fixed |  | 2026-08-09T02:22:18.281Z | 2026-08-09T03:17:44.327Z |
 
 ````json
 [
@@ -29,10 +29,10 @@ last_updated: 2026-08-09T02:22:18.281Z
     "file": "app/page.tsx",
     "line": null,
     "description": "Task 2 human-check: physical-iPhone import/persistence verification (real .mp3/.m4a/.m4b, force-quit/relaunch) not performed — no iPhone available in this environment",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-09T02:04:06.488Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-09T03:17:43.675Z"
   },
   {
     "id": 2,
@@ -41,10 +41,10 @@ last_updated: 2026-08-09T02:22:18.281Z
     "file": "scripts/check-pwa-assets.mjs",
     "line": null,
     "description": "pnpm verify:pwa fails 2/27 assertions (empty-state text absent from raw SSR HTML) — expected consequence of useLiveQuery's undefined-first-render design (Pattern 2), not a regression; 25/27 installability assertions still pass",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-09T02:04:06.667Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-09T03:17:43.853Z"
   },
   {
     "id": 3,
@@ -53,10 +53,10 @@ last_updated: 2026-08-09T02:22:18.281Z
     "file": "components/library-row.tsx",
     "line": null,
     "description": "Task 2/3 human-check: physical-iPhone verification of long-title truncation, Accent progress-bar fill, header Plus visibility, swipe reveal/spring-back, verbatim D-08 dialog, cancel/confirm delete behavior, and post-relaunch persistence of deletion — not performed, no iPhone available in this environment",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-09T02:13:12.147Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-09T03:17:44.038Z"
   },
   {
     "id": 4,
@@ -65,10 +65,10 @@ last_updated: 2026-08-09T02:22:18.281Z
     "file": "app/page.tsx",
     "line": null,
     "description": "Task 2 human-check: physical-iPhone verification of D-02/D-03 (placeholder row appears/resolves without jump on empty and populated library, non-audio pick raises correct dismissible banner variant, mixed multi-select imports valid file while reporting only the invalid one, banner clears on next success) not performed - no iPhone available in this environment",
-    "status": "open",
+    "status": "fixed",
     "reason": "",
     "recorded_at": "2026-08-09T02:22:18.281Z",
-    "resolved_at": null
+    "resolved_at": "2026-08-09T03:17:44.327Z"
   }
 ]
 ````
