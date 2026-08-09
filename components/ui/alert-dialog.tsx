@@ -30,12 +30,29 @@ AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
->(({ className = "", ...props }, ref) => (
+>(({ className = "", style, ...props }, ref) => (
   <AlertDialogPortal>
     <AlertDialogOverlay />
     <AlertDialogPrimitive.Content
       ref={ref}
-      className={`fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-[8px] bg-[#171717] p-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 ${className}`}
+      // Centering/sizing is inline, not Tailwind arbitrary-value classes
+      // (`left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+      // w-[calc(100%-2rem)] max-w-sm`) — on a physical iPhone PWA those
+      // compound utilities rendered the dialog as a narrow, full-height
+      // right-edge strip instead of a centered card (observed on-device,
+      // not reproducible from source alone). Inline styles can't be
+      // dropped by any build-time CSS step, so this removes that failure
+      // mode entirely regardless of its exact cause.
+      style={{
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "calc(100% - 2rem)",
+        maxWidth: "24rem",
+        ...style,
+      }}
+      className={`z-50 rounded-[8px] bg-[#171717] p-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 ${className}`}
       {...props}
     />
   </AlertDialogPortal>
