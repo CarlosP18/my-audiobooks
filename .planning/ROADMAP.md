@@ -58,7 +58,7 @@ Plans:
   4. Each book in the library screen shows a progress indicator (percent complete or time remaining).
   5. The user can delete a book from the library screen, freeing its storage, and it disappears from the list immediately.
 
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 
 Plans:
 **Wave 1**
@@ -67,7 +67,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02-PLAN.md — Real library row and swipe-to-delete: hand-vendored Radix alert-dialog and progress, truncating titles, and a delete that frees storage (LIBR-01, LIBR-03, LIBR-04, LIBR-05)
+- [x] 02-02-PLAN.md — Real library row and swipe-to-delete: hand-vendored Radix alert-dialog and progress, truncating titles, and a delete that frees storage (LIBR-01, LIBR-03, LIBR-04, LIBR-05)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -100,5 +100,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
-| 2. Import & Library | 1/3 | In Progress|  |
+| 2. Import & Library | 2/3 | In Progress|  |
 | 3. Playback & Resume | 0/TBD | Not started | - |
