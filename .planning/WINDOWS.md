@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 2
+open_count: 3
 waived_count: 0
 fixed_count: 0
-total_count: 2
-last_updated: 2026-08-09T02:04:06.667Z
+total_count: 3
+last_updated: 2026-08-09T02:13:12.147Z
 ---
 
 # Broken Windows Ledger
@@ -17,6 +17,7 @@ last_updated: 2026-08-09T02:04:06.667Z
 |----|-------|------|------|------|-------------|--------|--------|-------------|-------------|
 | 1 | 02 | unrun-verify | app/page.tsx |  | Task 2 human-check: physical-iPhone import/persistence verification (real .mp3/.m4a/.m4b, force-quit/relaunch) not performed — no iPhone available in this environment | open |  | 2026-08-09T02:04:06.488Z |  |
 | 2 | 02 | deviation | scripts/check-pwa-assets.mjs |  | pnpm verify:pwa fails 2/27 assertions (empty-state text absent from raw SSR HTML) — expected consequence of useLiveQuery's undefined-first-render design (Pattern 2), not a regression; 25/27 installability assertions still pass | open |  | 2026-08-09T02:04:06.667Z |  |
+| 3 | 02 | unrun-verify | components/library-row.tsx |  | Task 2/3 human-check: physical-iPhone verification of long-title truncation, Accent progress-bar fill, header Plus visibility, swipe reveal/spring-back, verbatim D-08 dialog, cancel/confirm delete behavior, and post-relaunch persistence of deletion — not performed, no iPhone available in this environment | open |  | 2026-08-09T02:13:12.147Z |  |
 
 ````json
 [
@@ -42,6 +43,18 @@ last_updated: 2026-08-09T02:04:06.667Z
     "status": "open",
     "reason": "",
     "recorded_at": "2026-08-09T02:04:06.667Z",
+    "resolved_at": null
+  },
+  {
+    "id": 3,
+    "kind": "unrun-verify",
+    "phase": "02",
+    "file": "components/library-row.tsx",
+    "line": null,
+    "description": "Task 2/3 human-check: physical-iPhone verification of long-title truncation, Accent progress-bar fill, header Plus visibility, swipe reveal/spring-back, verbatim D-08 dialog, cancel/confirm delete behavior, and post-relaunch persistence of deletion — not performed, no iPhone available in this environment",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-08-09T02:13:12.147Z",
     "resolved_at": null
   }
 ]
