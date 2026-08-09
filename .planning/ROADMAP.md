@@ -58,12 +58,12 @@ Plans:
   4. Each book in the library screen shows a progress indicator (percent complete or time remaining).
   5. The user can delete a book from the library screen, freeing its storage, and it disappears from the list immediately.
 
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Import one file end-to-end into a persistent library: Dexie schema, title cleanup, duration read, and a data-driven library screen (IMPT-01, IMPT-02, LIBR-01, LIBR-02, LIBR-03, LIBR-04)
+- [x] 02-01-PLAN.md — Import one file end-to-end into a persistent library: Dexie schema, title cleanup, duration read, and a data-driven library screen (IMPT-01, IMPT-02, LIBR-01, LIBR-02, LIBR-03, LIBR-04)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -100,5 +100,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
-| 2. Import & Library | 0/3 | Planned | - |
+| 2. Import & Library | 1/3 | In Progress|  |
 | 3. Playback & Resume | 0/TBD | Not started | - |
