@@ -15,7 +15,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { ChevronLeft, BookAudio } from "lucide-react";
-import { db } from "@/lib/db";
+import { db, getBookWithBlob } from "@/lib/db";
 import type { Book } from "@/lib/db";
 import { shouldPersist, SKIP_SECONDS, clampSeek } from "@/lib/playback";
 import { formatElapsed, formatTimeRemaining } from "@/lib/format";
@@ -41,8 +41,13 @@ export default function PlayerPage() {
   const bookId =
     Number.isInteger(parsedId) && parsedId > 0 ? parsedId : undefined;
 
+  // getBookWithBlob joins the (small, frequently-written) books table with
+  // the (large, write-once) blobs table — see lib/db.ts's v2 schema split.
+  // This is the fix for the production bug where a 5-second position
+  // write, previously re-touching the same record as the audio Blob,
+  // could block this very read.
   const queryResult = useLiveQuery(
-    () => (bookId === undefined ? undefined : db.books.get(bookId)),
+    () => (bookId === undefined ? undefined : getBookWithBlob(bookId)),
     [bookId],
     LOADING,
   );

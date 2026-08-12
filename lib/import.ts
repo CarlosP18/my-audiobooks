@@ -1,12 +1,13 @@
 // Import validation + write pipeline. The Dexie write in `importFile` is
-// kept as a single tight `db.books.add()` call with no unrelated awaits
+// kept as a single tight `addBook()` call (itself one atomic transaction
+// across the books/blobs tables, lib/db.ts) with no unrelated awaits
 // interleaved between async prep (duration read, title cleanup) and the
 // write itself — see 02-RESEARCH.md Pitfall 3 ("IndexedDB transactions in
 // Safari can abort around await boundaries"). The write's catch block
 // matches on both `QuotaExceededError` and `AbortError` because Dexie has
 // been observed surfacing a full disk as either one depending on engine —
 // see Pitfall 4.
-import { db } from "@/lib/db";
+import { addBook } from "@/lib/db";
 import { cleanTitle } from "@/lib/title";
 import { readAudioDuration } from "@/lib/duration";
 
@@ -72,18 +73,14 @@ export async function importFile(file: File): Promise<number> {
   const title = cleanTitle(file.name);
 
   try {
-    const id = await db.books.add({
+    return await addBook({
       blob: file,
       title,
       filename: file.name,
       importedAt: Date.now(),
       fileSize: file.size,
       duration,
-      position: 0,
     });
-    // Book.id is typed optional (auto-generated primary key), but a
-    // successful add() always assigns a real numeric id.
-    return id as number;
   } catch (err) {
     if (
       err instanceof Error &&

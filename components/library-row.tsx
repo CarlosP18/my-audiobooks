@@ -19,9 +19,9 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { db } from "@/lib/db";
+import { deleteBook } from "@/lib/db";
 import { percentComplete, formatTimeRemaining } from "@/lib/format";
-import type { Book } from "@/lib/db";
+import type { BookMeta } from "@/lib/db";
 
 // 02-02-PLAN.md Claude's Discretion #3: 48px latch threshold, 96px panel
 // width — comfortably holds the Trash2 icon plus the "Delete" label at a
@@ -30,7 +30,7 @@ const PANEL_WIDTH = 96;
 const SWIPE_LATCH_THRESHOLD = 48;
 
 type LibraryRowProps = {
-  book: Book;
+  book: BookMeta;
 };
 
 export function LibraryRow({ book }: LibraryRowProps) {
@@ -108,11 +108,12 @@ export function LibraryRow({ book }: LibraryRowProps) {
 
   async function handleDelete() {
     if (book.id === undefined) return;
-    // db.books.delete is idempotent — no existence check needed. This
-    // single call removes the Blob and metadata together (co-located in
-    // one record, lib/db.ts), so it can never orphan storage. useLiveQuery
-    // re-renders the list on its own; no manual refetch/optimistic removal.
-    await db.books.delete(book.id);
+    // deleteBook is idempotent — no existence check needed. It removes the
+    // Blob and metadata together in one transaction (lib/db.ts), so it can
+    // never orphan storage even though they now live in separate tables.
+    // useLiveQuery re-renders the list on its own; no manual
+    // refetch/optimistic removal.
+    await deleteBook(book.id);
   }
 
   const translateX = dragX ?? (panelOpen ? -PANEL_WIDTH : 0);
