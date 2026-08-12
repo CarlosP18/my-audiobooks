@@ -89,12 +89,12 @@ Plans:
   4. The player screen displays elapsed and remaining time that updates as playback progresses.
   5. Playback position is saved automatically and frequently — on pause, on backgrounding/visibility change, and periodically during playback — so reopening a book after fully closing and relaunching the app resumes playback from very close to the last position.
 
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — Tracer slice: player route, object-URL lifecycle, play/pause, throttled position persistence, resume after relaunch, and the loading/not-found/populated screen states (PLAY-01, PLAY-05, PLAY-06)
+- [x] 03-01-PLAN.md — Tracer slice: player route, object-URL lifecycle, play/pause, throttled position persistence, resume after relaunch, and the loading/not-found/populated screen states (PLAY-01, PLAY-05, PLAY-06)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -115,4 +115,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
 | 2. Import & Library | 3/3 | Complete    | 2026-08-09 |
-| 3. Playback & Resume | 0/3 | Not started | - |
+| 3. Playback & Resume | 1/3 | In Progress|  |

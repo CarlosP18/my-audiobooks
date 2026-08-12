@@ -28,12 +28,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Player
 
-- [ ] **PLAY-01**: User can play and pause the current audiobook
+- [x] **PLAY-01**: User can play and pause the current audiobook
 - [ ] **PLAY-02**: User can skip backward/forward by a fixed 15-second increment
 - [ ] **PLAY-03**: User can seek to an arbitrary point via a scrub bar
 - [ ] **PLAY-04**: Player displays elapsed and remaining time for the current audiobook
-- [ ] **PLAY-05**: Playback position is saved automatically and frequently — on pause, on visibility change, and periodically during playback (not only on explicit pause)
-- [ ] **PLAY-06**: Reopening an audiobook resumes playback from the last saved position, including after the app was fully closed and relaunched later
+- [x] **PLAY-05**: Playback position is saved automatically and frequently — on pause, on visibility change, and periodically during playback (not only on explicit pause)
+- [x] **PLAY-06**: Reopening an audiobook resumes playback from the last saved position, including after the app was fully closed and relaunched later
 
 ## v2 Requirements
 
@@ -93,12 +93,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LIBR-03 | Phase 2 | Complete |
 | LIBR-04 | Phase 2 | Complete |
 | LIBR-05 | Phase 2 | Complete |
-| PLAY-01 | Phase 3 | Pending |
+| PLAY-01 | Phase 3 | Complete |
 | PLAY-02 | Phase 3 | Pending |
 | PLAY-03 | Phase 3 | Pending |
 | PLAY-04 | Phase 3 | Pending |
-| PLAY-05 | Phase 3 | Pending |
-| PLAY-06 | Phase 3 | Pending |
+| PLAY-05 | Phase 3 | Complete |
+| PLAY-06 | Phase 3 | Complete |
 
 **Coverage:**
 
