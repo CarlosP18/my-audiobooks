@@ -89,7 +89,7 @@ Plans:
   4. The player screen displays elapsed and remaining time that updates as playback progresses.
   5. Playback position is saved automatically and frequently — on pause, on backgrounding/visibility change, and periodically during playback — so reopening a book after fully closing and relaunching the app resumes playback from very close to the last position.
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans executed
 
 Plans:
 **Wave 1**
@@ -102,7 +102,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 03-03-PLAN.md — Drag-to-seek scrub bar: gated hand-vendoring of the Radix slider primitive and D-03's pause-on-drag / seek-on-release lifecycle (PLAY-03)
+- [x] 03-03-PLAN.md — Drag-to-seek scrub bar: gated hand-vendoring of the Radix slider primitive and D-03's pause-on-drag / seek-on-release lifecycle (PLAY-03)
 
 **UI hint**: yes
 
@@ -115,4 +115,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Install & Offline App Shell | 2/2 | Complete    | 2026-08-08 |
 | 2. Import & Library | 3/3 | Complete    | 2026-08-09 |
-| 3. Playback & Resume | 2/3 | In Progress|  |
+| 3. Playback & Resume | 3/3 | In Progress|  |
