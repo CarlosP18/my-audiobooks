@@ -14,7 +14,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { cleanTitle } from "../lib/title.ts";
-import { percentComplete, formatTimeRemaining } from "../lib/format.ts";
+import {
+  percentComplete,
+  formatTimeRemaining,
+  formatElapsed,
+} from "../lib/format.ts";
 import { shouldPersist } from "../lib/playback.ts";
 
 // --- cleanTitle (D-04) ---
@@ -64,6 +68,37 @@ test("percentComplete(0, 19800) is 0", () => {
 
 test("percentComplete(0, 0) is 0 rather than NaN", () => {
   assert.equal(percentComplete(0, 0), 0);
+});
+
+// --- formatElapsed (PLAY-04 / 03-UI-SPEC.md Layout step 4, symmetric with
+// formatTimeRemaining above) ---
+
+test("formatElapsed renders the under-one-minute form (59s)", () => {
+  assert.equal(formatElapsed(59), "<1m elapsed");
+});
+
+test("formatElapsed renders the minutes-only worked example (2700s)", () => {
+  assert.equal(formatElapsed(2700), "45m elapsed");
+});
+
+test("formatElapsed renders the 2h15m hours form (8100s)", () => {
+  assert.equal(formatElapsed(8100), "2h 15m elapsed");
+});
+
+test("formatElapsed renders the 5h30m hours form (19800s)", () => {
+  assert.equal(formatElapsed(19800), "5h 30m elapsed");
+});
+
+test("formatElapsed renders the 20m left-hand side of the UI spec's worked example (1200s)", () => {
+  assert.equal(formatElapsed(1200), "20m elapsed");
+});
+
+test("formatElapsed rounds 3599s up into the hours form rather than a 60-minute value", () => {
+  assert.equal(formatElapsed(3599), "1h 0m elapsed");
+});
+
+test("formatElapsed renders the under-one-minute form at the very start (0s)", () => {
+  assert.equal(formatElapsed(0), "<1m elapsed");
 });
 
 // --- shouldPersist (D-02 / PLAY-05 locked 5-second throttle) ---
