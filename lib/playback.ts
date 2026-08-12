@@ -21,3 +21,14 @@ export const POSITION_SAVE_THROTTLE_MS = 5000;
 export function shouldPersist(lastSavedAtMs: number, nowMs: number): boolean {
   return nowMs - lastSavedAtMs >= POSITION_SAVE_THROTTLE_MS;
 }
+
+// PLAY-02, locked increment for both skip controls.
+export const SKIP_SECONDS = 15;
+
+// Bounds a candidate seek target between 0 and the book's duration,
+// inclusive on both ends. Shared by the ±15s skip handlers and, from the
+// other side of the same boundary, D-04's end-of-book terminal state —
+// no handler can ever assign a negative or beyond-duration current time.
+export function clampSeek(seconds: number, duration: number): number {
+  return Math.min(Math.max(seconds, 0), duration);
+}
