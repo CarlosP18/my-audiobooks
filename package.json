@@ -13,6 +13,7 @@
   "dependencies": {
     "@radix-ui/react-alert-dialog": "1.1.23",
     "@radix-ui/react-progress": "1.1.16",
+    "@radix-ui/react-slider": "^1.4.7",
     "@serwist/next": "9.5.12",
     "@serwist/sw": "9.5.12",
     "dexie": "4.4.4",
