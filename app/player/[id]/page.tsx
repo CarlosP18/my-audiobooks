@@ -17,7 +17,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { ChevronLeft, BookAudio } from "lucide-react";
 import { db } from "@/lib/db";
 import type { Book } from "@/lib/db";
-import { shouldPersist } from "@/lib/playback";
+import { shouldPersist, SKIP_SECONDS, clampSeek } from "@/lib/playback";
 import { formatElapsed, formatTimeRemaining } from "@/lib/format";
 import { TransportControls } from "@/components/player/transport-controls";
 
@@ -215,6 +215,30 @@ export default function PlayerPage() {
     };
   }, [resolvedBook?.id]);
 
+  // End-of-book terminal state (D-04, PLAY-06's prohibition counterpart):
+  // when the element fires `ended`, the stored position is set to the
+  // book's own duration through the same partial-field Dexie update path
+  // Plan 01 established — never a whole-record write, never a value that
+  // returns the book to the beginning. Playback simply stops; the
+  // play/pause button reverts to Play through the play/pause listeners
+  // above, which already drive that state from the element's own events.
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || resolvedBook?.id === undefined) return;
+
+    function onEnded() {
+      const latest = bookRef.current;
+      if (!audio || latest?.id === undefined) return;
+      setElapsed(Math.floor(audio.duration));
+      db.books.update(latest.id, { position: audio.duration }).catch(() => {
+        // Fire-and-forget, matching this file's other Dexie writes.
+      });
+    }
+
+    audio.addEventListener("ended", onEnded);
+    return () => audio.removeEventListener("ended", onEnded);
+  }, [resolvedBook?.id]);
+
   function handleTogglePlay() {
     const audio = audioRef.current;
     if (!audio) return;
@@ -228,6 +252,30 @@ export default function PlayerPage() {
     } else {
       audio.pause();
     }
+  }
+
+  // Both skip handlers stay synchronous — they run inside a tap and must
+  // not introduce a promise boundary, same reason handleTogglePlay does
+  // (03-RESEARCH.md Pattern 2). Every skip target is bounded by
+  // clampSeek against the resolved record's own duration (PLAY-02,
+  // T-03-05), and elapsed is set to the same clamped value immediately
+  // so the readout responds without waiting for the next timeupdate.
+  function handleSkipBack() {
+    const audio = audioRef.current;
+    const current = bookRef.current;
+    if (!audio || !current) return;
+    const target = clampSeek(audio.currentTime - SKIP_SECONDS, current.duration);
+    audio.currentTime = target;
+    setElapsed(Math.floor(target));
+  }
+
+  function handleSkipForward() {
+    const audio = audioRef.current;
+    const current = bookRef.current;
+    if (!audio || !current) return;
+    const target = clampSeek(audio.currentTime + SKIP_SECONDS, current.duration);
+    audio.currentTime = target;
+    setElapsed(Math.floor(target));
   }
 
   const rootStyle = { paddingBottom: "max(24px, env(safe-area-inset-bottom))" };
@@ -311,6 +359,8 @@ export default function PlayerPage() {
         <TransportControls
           isPlaying={isPlaying}
           onTogglePlay={handleTogglePlay}
+          onSkipBack={handleSkipBack}
+          onSkipForward={handleSkipForward}
         />
       </div>
     </div>
