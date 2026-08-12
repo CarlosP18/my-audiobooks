@@ -18,6 +18,7 @@ import { ChevronLeft, BookAudio } from "lucide-react";
 import { db } from "@/lib/db";
 import type { Book } from "@/lib/db";
 import { shouldPersist } from "@/lib/playback";
+import { formatElapsed, formatTimeRemaining } from "@/lib/format";
 import { TransportControls } from "@/components/player/transport-controls";
 
 // A module-level sentinel, distinct from any real query result (including
@@ -71,6 +72,16 @@ export default function PlayerPage() {
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Elapsed time in whole seconds, for the live readout (PLAY-04). Plan
+  // 03's scrub bar thumb will also consume this same state — it must
+  // track live playback, not the position field's 5-second-stale stored
+  // copy from useLiveQuery.
+  const [elapsed, setElapsed] = useState(0);
+  // Tracks the last whole-second value the UI tick observed, so the tick
+  // below only calls setElapsed when the rendered second actually
+  // changes — roughly once per second, no timer, no re-render storm.
+  const lastWholeSecondRef = useRef<number | null>(null);
+
   // Object URL lifecycle (03-RESEARCH.md Pattern 2 / Pitfall B): created
   // once per book id, revoked in this effect's own cleanup. This is
   // load-bearing — depending on the whole book object here would revoke
@@ -102,6 +113,38 @@ export default function PlayerPage() {
 
     audio.addEventListener("loadedmetadata", onLoadedMetadata);
     return () => audio.removeEventListener("loadedmetadata", onLoadedMetadata);
+  }, [resolvedBook?.id]);
+
+  // Initialize elapsed from the resolved record's stored position, so the
+  // readout is correct on first render of a partially-listened book,
+  // before the <audio> element has loaded metadata (PLAY-04).
+  useEffect(() => {
+    const current = bookRef.current;
+    if (!current) return;
+    setElapsed(Math.floor(current.position));
+    lastWholeSecondRef.current = null;
+  }, [resolvedBook?.id]);
+
+  // Live UI tick (PLAY-04): updates the visible elapsed value roughly
+  // once per second, deliberately independent of the 5-second database
+  // -write throttle below — the visible text ticking and the durable
+  // write are two different cadences with two different reasons
+  // (03-UI-SPEC.md Layout step 4).
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || resolvedBook?.id === undefined) return;
+
+    function onTimeUpdate() {
+      if (!audio) return;
+      const wholeSecond = Math.floor(audio.currentTime);
+      if (wholeSecond !== lastWholeSecondRef.current) {
+        lastWholeSecondRef.current = wholeSecond;
+        setElapsed(wholeSecond);
+      }
+    }
+
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    return () => audio.removeEventListener("timeupdate", onTimeUpdate);
   }, [resolvedBook?.id]);
 
   // Throttled position persistence (PLAY-05, D-02, 03-RESEARCH.md
@@ -250,6 +293,19 @@ export default function PlayerPage() {
       >
         {resolvedBook.title}
       </h1>
+
+      {/* Time readout (PLAY-04, 03-UI-SPEC.md Layout step 4). Positioned
+          after the title and before the transport row, leaving room for
+          Plan 03's scrub bar to be inserted directly above it. Both
+          values share formatTimeRemaining's/formatElapsed's word-based,
+          minute-granularity vocabulary — the library row's own phrasing
+          — rather than raw mm:ss clock digits. */}
+      <div className="mt-12 flex justify-between px-6 font-mono text-[14px] font-normal leading-[1.5] text-[#A3A3A3]">
+        <span>{formatElapsed(elapsed)}</span>
+        <span>
+          {formatTimeRemaining(Math.max(resolvedBook.duration - elapsed, 0))}
+        </span>
+      </div>
 
       <div className="mt-12 px-6">
         <TransportControls

@@ -29,3 +29,25 @@ export function formatTimeRemaining(secondsRemaining: number): string {
 
   return `${totalMinutes}m remaining`;
 }
+
+// Symmetric with formatTimeRemaining above (03-UI-SPEC.md Layout step 4) —
+// same rounding discipline, differing only in the trailing word, so the
+// player's elapsed readout and the library row's remaining readout speak
+// the same word-based, minute-granularity vocabulary.
+export function formatElapsed(secondsElapsed: number): string {
+  if (secondsElapsed < 60) return "<1m elapsed";
+
+  // Round to whole minutes BEFORE branching on the hour boundary — same
+  // reasoning as formatTimeRemaining's identical comment: prevents a
+  // 3599-second value (59.98min) rendering as a nonsensical "59m" instead
+  // of rounding up into the hours form.
+  const totalMinutes = Math.round(secondsElapsed / 60);
+
+  if (totalMinutes >= 60) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}m elapsed`;
+  }
+
+  return `${totalMinutes}m elapsed`;
+}
