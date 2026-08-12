@@ -19,7 +19,7 @@ import {
   formatTimeRemaining,
   formatElapsed,
 } from "../lib/format.ts";
-import { shouldPersist } from "../lib/playback.ts";
+import { shouldPersist, SKIP_SECONDS, clampSeek } from "../lib/playback.ts";
 
 // --- cleanTitle (D-04) ---
 
@@ -117,4 +117,30 @@ test("shouldPersist returns true when the elapsed gap is above 5000ms", () => {
 
 test("shouldPersist returns true for the first-write sentinel (lastSavedAtMs = 0)", () => {
   assert.equal(shouldPersist(0, 10000), true);
+});
+
+// --- SKIP_SECONDS / clampSeek (PLAY-02, D-04's shared clamp boundary) ---
+
+test("SKIP_SECONDS equals 15", () => {
+  assert.equal(SKIP_SECONDS, 15);
+});
+
+test("clampSeek(100, 19800) passes an interior value through untouched", () => {
+  assert.equal(clampSeek(100, 19800), 100);
+});
+
+test("clampSeek(-5, 19800) clamps a below-zero skip to 0", () => {
+  assert.equal(clampSeek(-5, 19800), 0);
+});
+
+test("clampSeek(19805, 19800) clamps a past-duration skip to duration exactly", () => {
+  assert.equal(clampSeek(19805, 19800), 19800);
+});
+
+test("clampSeek(0, 19800) is inclusive at the lower bound", () => {
+  assert.equal(clampSeek(0, 19800), 0);
+});
+
+test("clampSeek(19800, 19800) is inclusive at the upper bound", () => {
+  assert.equal(clampSeek(19800, 19800), 19800);
 });
