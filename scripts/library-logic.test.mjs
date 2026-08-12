@@ -15,6 +15,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { cleanTitle } from "../lib/title.ts";
 import { percentComplete, formatTimeRemaining } from "../lib/format.ts";
+import { shouldPersist } from "../lib/playback.ts";
 
 // --- cleanTitle (D-04) ---
 
@@ -63,4 +64,22 @@ test("percentComplete(0, 19800) is 0", () => {
 
 test("percentComplete(0, 0) is 0 rather than NaN", () => {
   assert.equal(percentComplete(0, 0), 0);
+});
+
+// --- shouldPersist (D-02 / PLAY-05 locked 5-second throttle) ---
+
+test("shouldPersist returns false when the elapsed gap is below the 5000ms threshold", () => {
+  assert.equal(shouldPersist(1000, 4000), false);
+});
+
+test("shouldPersist returns true when the elapsed gap is exactly 5000ms", () => {
+  assert.equal(shouldPersist(0, 5000), true);
+});
+
+test("shouldPersist returns true when the elapsed gap is above 5000ms", () => {
+  assert.equal(shouldPersist(0, 5001), true);
+});
+
+test("shouldPersist returns true for the first-write sentinel (lastSavedAtMs = 0)", () => {
+  assert.equal(shouldPersist(0, 10000), true);
 });

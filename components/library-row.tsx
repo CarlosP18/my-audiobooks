@@ -4,7 +4,8 @@
 // and swipe-to-delete (D-07/D-08/LIBR-05). No gesture library — plain
 // touch-event handlers on the row container, per 02-02-PLAN.md Task 3.
 import { useRef, useState } from "react";
-import type { TouchEvent } from "react";
+import type { MouseEvent, TouchEvent } from "react";
+import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -95,10 +96,14 @@ export function LibraryRow({ book }: LibraryRowProps) {
     setDragX(null);
   }
 
-  function handleForegroundClick() {
+  function handleForegroundClick(event: MouseEvent<HTMLAnchorElement>) {
     // Touching anywhere else in the row while the panel is revealed closes
-    // it without deleting anything.
-    if (panelOpen) closePanel();
+    // it without deleting anything — and, now that the foreground is a
+    // navigation link to the player (D-01), without navigating either.
+    if (panelOpen) {
+      event.preventDefault();
+      closePanel();
+    }
   }
 
   async function handleDelete() {
@@ -168,8 +173,9 @@ export function LibraryRow({ book }: LibraryRowProps) {
         </AlertDialog>
       </div>
 
-      <div
-        className="relative bg-[#171717] p-4"
+      <Link
+        href={`/player/${book.id}`}
+        className="relative block bg-[#171717] p-4"
         style={{
           transform: `translateX(${translateX}px)`,
           // dragX is non-null only while a touch is actively moving the
@@ -186,7 +192,7 @@ export function LibraryRow({ book }: LibraryRowProps) {
         <p className="text-[14px] leading-[1.5] text-[#A3A3A3]">
           {percent}% — {remaining}
         </p>
-      </div>
+      </Link>
     </li>
   );
 }
