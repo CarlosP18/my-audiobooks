@@ -20,6 +20,7 @@ import type { Book } from "@/lib/db";
 import { shouldPersist, SKIP_SECONDS, clampSeek } from "@/lib/playback";
 import { formatElapsed, formatTimeRemaining } from "@/lib/format";
 import { TransportControls } from "@/components/player/transport-controls";
+import { ScrubBar } from "@/components/player/scrub-bar";
 
 // A module-level sentinel, distinct from any real query result (including
 // `undefined`, which is itself a valid "book not found" result). Passed
@@ -278,6 +279,13 @@ export default function PlayerPage() {
     setElapsed(Math.floor(target));
   }
 
+  // ScrubBar (PLAY-03) owns the D-03 drag lifecycle itself; this handler
+  // just keeps the page's own elapsed state in sync with the committed
+  // seek, the same immediate-update discipline the skip handlers use.
+  function handleSeek(seconds: number) {
+    setElapsed(Math.floor(seconds));
+  }
+
   const rootStyle = { paddingBottom: "max(24px, env(safe-area-inset-bottom))" };
   const backButton = (
     <Link
@@ -342,13 +350,25 @@ export default function PlayerPage() {
         {resolvedBook.title}
       </h1>
 
-      {/* Time readout (PLAY-04, 03-UI-SPEC.md Layout step 4). Positioned
-          after the title and before the transport row, leaving room for
-          Plan 03's scrub bar to be inserted directly above it. Both
-          values share formatTimeRemaining's/formatElapsed's word-based,
+      {/* Scrub bar (PLAY-03, 03-UI-SPEC.md Layout step 4): D-03's
+          pause-on-drag/seek-on-release lifecycle lives entirely inside
+          ScrubBar. Thumb tracks the live `elapsed` state, not the stored
+          `position` field, so it never lags behind the 5-second write
+          cadence. */}
+      <div className="mt-12 px-6">
+        <ScrubBar
+          audioRef={audioRef}
+          duration={resolvedBook.duration}
+          position={elapsed}
+          onSeek={handleSeek}
+        />
+      </div>
+
+      {/* Time readout (PLAY-04, 03-UI-SPEC.md Layout step 4). Both values
+          share formatTimeRemaining's/formatElapsed's word-based,
           minute-granularity vocabulary — the library row's own phrasing
           — rather than raw mm:ss clock digits. */}
-      <div className="mt-12 flex justify-between px-6 font-mono text-[14px] font-normal leading-[1.5] text-[#A3A3A3]">
+      <div className="mt-2 flex justify-between px-6 font-mono text-[14px] font-normal leading-[1.5] text-[#A3A3A3]">
         <span>{formatElapsed(elapsed)}</span>
         <span>
           {formatTimeRemaining(Math.max(resolvedBook.duration - elapsed, 0))}
